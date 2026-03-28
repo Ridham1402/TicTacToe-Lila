@@ -1,0 +1,45 @@
+# Nakama TicTacToe — Server Configuration
+# Used for both local Docker dev and Render.com deployment.
+# DATABASE_URL is injected as an environment variable.
+
+name: nakama-tictactoe
+data_dir: "/nakama/data"
+
+logger:
+  level: "INFO"
+  stdout: true
+
+runtime:
+  js_path: "/nakama/data/modules"
+  js_entrypoint: "main.js"
+  # Tick rate: 10 ticks/second, matchLoop runs every 100ms
+  min_count: 0
+  max_count: 4096
+  call_stack_size: 128
+  max_memory_mb: 256
+
+database:
+  address:
+    - "${DATABASE_URL}"
+  conn_max_lifetime_ms: 60000
+  max_open_conns: 32
+  max_idle_conns: 16
+
+socket:
+  server_key: "defaultkey"
+  port: 7350
+  address: "0.0.0.0"
+  protocol: "tcp"
+  max_message_size_bytes: 4096
+  outgoing_queue_size: 64
+
+console:
+  port: 7351
+  address: "0.0.0.0"
+  # Change these credentials in production!
+  username: "admin"
+  password: "password"
+
+metrics:
+  reporting_freq_sec: 60
+  namespace: "nakama_tictactoe"

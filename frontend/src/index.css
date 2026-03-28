@@ -1,0 +1,198 @@
+/* ==========================================================================
+   index.css — Global styles for TicTacToe frontend
+   Tailwind directives + custom utilities for neon effects and animations
+   ========================================================================== */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------------------------------------------------------------------
+   Base layer: dark gaming aesthetic defaults
+   -------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    --color-bg: #0f0f1a;
+    --color-surface: #1a1a2e;
+    --color-elevated: #16213e;
+    --color-border: #2a2a4a;
+    --color-cyan: #00e5ff;
+    --color-purple: #a855f7;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: #e2e8f0;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  #root {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Custom scrollbar — subtle dark style */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-cyan);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Components layer: reusable class-based utilities
+   -------------------------------------------------------------------------- */
+@layer components {
+  /* Glassmorphism card */
+  .glass-card {
+    @apply bg-dark-surface/80 backdrop-blur-xl border border-dark-border/60 rounded-2xl;
+  }
+
+  /* Neon button — cyan variant */
+  .btn-neon-cyan {
+    @apply relative px-6 py-3 font-semibold text-sm tracking-wider uppercase
+           text-neon-cyan border border-neon-cyan/40 rounded-xl
+           bg-neon-cyan/10
+           transition-all duration-200
+           hover:bg-neon-cyan/20 hover:border-neon-cyan hover:shadow-glow-cyan
+           active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed
+           disabled:hover:shadow-none;
+  }
+
+  /* Neon button — purple variant */
+  .btn-neon-purple {
+    @apply relative px-6 py-3 font-semibold text-sm tracking-wider uppercase
+           text-neon-purple border border-neon-purple/40 rounded-xl
+           bg-neon-purple/10
+           transition-all duration-200
+           hover:bg-neon-purple/20 hover:border-neon-purple hover:shadow-glow-purple
+           active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed
+           disabled:hover:shadow-none;
+  }
+
+  /* Ghost / secondary button */
+  .btn-ghost {
+    @apply px-6 py-3 font-medium text-sm text-slate-400 border border-dark-border
+           rounded-xl bg-transparent transition-all duration-200
+           hover:text-white hover:border-slate-500 hover:bg-dark-elevated
+           active:scale-95;
+  }
+
+  /* Neon text glow — cyan */
+  .text-glow-cyan {
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.6), 0 0 30px rgba(0, 229, 255, 0.3);
+  }
+
+  /* Neon text glow — purple */
+  .text-glow-purple {
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.6), 0 0 30px rgba(168, 85, 247, 0.3);
+  }
+
+  /* Board cell */
+  .board-cell {
+    @apply relative aspect-square flex items-center justify-center
+           bg-dark-elevated border border-dark-border/60 rounded-xl
+           cursor-pointer transition-all duration-150
+           hover:bg-dark-border/30 hover:border-neon-cyan/30;
+  }
+
+  .board-cell:disabled,
+  .board-cell[data-disabled="true"] {
+    @apply cursor-not-allowed hover:bg-dark-elevated hover:border-dark-border/60;
+  }
+
+  .board-cell[data-winner="true"] {
+    @apply animate-win-flash border-neon-cyan/60;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Utilities layer: one-off helpers
+   -------------------------------------------------------------------------- */
+@layer utilities {
+  /* SVG timer ring animation */
+  .ring-dashoffset {
+    transition: stroke-dashoffset 0.9s linear;
+  }
+
+  /* Gradient text */
+  .gradient-text-cyan-purple {
+    background: linear-gradient(135deg, #00e5ff 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Shimmer loading skeleton */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-surface) 0%,
+      var(--color-elevated) 50%,
+      var(--color-surface) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Global ambient background effect — subtle radial gradient orbs
+   -------------------------------------------------------------------------- */
+body::before {
+  content: "";
+  position: fixed;
+  top: -20%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(
+    circle,
+    rgba(0, 229, 255, 0.06) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  bottom: -20%;
+  right: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.06) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}

@@ -1,0 +1,14 @@
+{
+  "name": "nakama-tictactoe",
+  "version": "1.0.0",
+  "description": "Nakama server-side module for TicTacToe multiplayer game",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch"
+  },
+  "devDependencies": {
+    "nakama-runtime": "github:heroiclabs/nakama-common#master",
+    "esbuild": "^0.20.2",
+    "typescript": "^5.4.5"
+  }
+}
