@@ -15,7 +15,4 @@ EXPOSE 7350 7351
 
 # Nakama reads DATABASE_URL from environment (set in Render env vars)
 # Run DB migrations then start the server
-CMD ["/bin/sh", "-c", \
-  "DB=$(echo $DATABASE_URL | sed 's|postgresql://||' | sed 's|postgres://||') && \
-  /nakama/nakama migrate up --config /nakama/data/config/local.yml --database.address $DB && \
-  /nakama/nakama --config /nakama/data/config/local.yml --database.address $DB"]
+CMD ["/bin/sh", "-c", "DB=$(echo \"$DATABASE_URL\" | sed 's|^postgresql://||' | sed 's|^postgres://||') && echo \"Connecting to: $DB\" && /nakama/nakama migrate up --config /nakama/data/config/local.yml --database.address \"$DB\" && exec /nakama/nakama --config /nakama/data/config/local.yml --database.address \"$DB\""]
