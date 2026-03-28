@@ -401,7 +401,7 @@ export function matchLoop(
                 if (state.status === "waiting") {
                     try {
                         const data = JSON.parse(
-                            msg.data as unknown as string
+                            nk.binaryToString(msg.data)
                         ) as PlayerReadyPayload;
                         state.mode = data.mode ?? state.mode;
                         logger.debug("PLAYER_READY: mode set to %s by %s", state.mode, senderId);
@@ -430,7 +430,7 @@ export function matchLoop(
                 let payload: MakeMovePayload;
                 try {
                     payload = JSON.parse(
-                        msg.data as unknown as string
+                        nk.binaryToString(msg.data)
                     ) as MakeMovePayload;
                 } catch (_) {
                     logger.warn("MAKE_MOVE rejected: malformed payload from %s", senderId);

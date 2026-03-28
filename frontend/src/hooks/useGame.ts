@@ -106,7 +106,11 @@ export function useGame(
         socket.onmatchmakermatched = async (matched) => {
             console.log("[useGame] matchmakerMatched →", matched.match_id);
             const mid = matched.match_id;
-            if (!mid) return;
+            if (!mid) {
+                console.error("[useGame] No match_id in matched event:", JSON.stringify(matched));
+                setGameStatus("idle");
+                return;
+            }
             try {
                 await socket.joinMatch(mid);
                 setMatchId(mid);

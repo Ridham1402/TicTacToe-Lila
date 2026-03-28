@@ -135,11 +135,11 @@ export function recordResult(
             try {
                 // Fetch existing metadata to preserve wins/losses/streak
                 const existing = fetchPlayerMeta(nk, uid);
-                const meta = JSON.stringify({
+                const meta = {
                     wins: existing.wins,
                     losses: existing.losses,
                     streak: 0, // draw resets streak
-                });
+                };
                 nk.leaderboardRecordWrite(LEADERBOARD_ID, uid, name, 0, 0, meta);
             } catch (e) {
                 logger.error("recordResult (draw) failed for %s: %s", uid, String(e));
@@ -153,11 +153,11 @@ export function recordResult(
         try {
             const existing = fetchPlayerMeta(nk, winnerId);
             const newStreak = existing.streak + 1;
-            const meta = JSON.stringify({
+            const meta = {
                 wins: existing.wins + 1,
                 losses: existing.losses,
                 streak: newStreak,
-            });
+            };
             nk.leaderboardRecordWrite(LEADERBOARD_ID, winnerId, winnerName, 3, 0, meta);
             logger.info("Leaderboard: win recorded for %s (streak=%d)", winnerName, newStreak);
         } catch (e) {
@@ -169,11 +169,11 @@ export function recordResult(
     if (loserId) {
         try {
             const existing = fetchPlayerMeta(nk, loserId);
-            const meta = JSON.stringify({
+            const meta = {
                 wins: existing.wins,
                 losses: existing.losses + 1,
                 streak: 0,
-            });
+            };
             nk.leaderboardRecordWrite(LEADERBOARD_ID, loserId, loserName, 0, 0, meta);
             logger.info("Leaderboard: loss recorded for %s", loserName);
         } catch (e) {
