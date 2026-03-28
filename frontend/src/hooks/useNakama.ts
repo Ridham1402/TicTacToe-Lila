@@ -76,7 +76,8 @@ export function useNakama(): NakamaState {
     const connectSocket = useCallback(
         async (sess: Session): Promise<Socket | null> => {
             try {
-                const sock = client.createSocket();
+                const USE_SSL = import.meta.env.VITE_NAKAMA_USE_SSL === "true";
+                const sock = client.createSocket(USE_SSL, false);
                 socketRef.current = sock;
 
                 sock.ondisconnect = () => {
