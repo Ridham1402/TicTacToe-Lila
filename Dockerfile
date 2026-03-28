@@ -16,5 +16,5 @@ EXPOSE 7350 7351
 # Nakama reads DATABASE_URL from environment (set in Render env vars)
 # Run DB migrations then start the server
 CMD ["/bin/sh", "-c", \
-  "/nakama/nakama migrate up --config /nakama/data/config/local.yml && \
-   /nakama/nakama --config /nakama/data/config/local.yml"]
+  "/nakama/nakama migrate up --config /nakama/data/config/local.yml --database.address ${DATABASE_URL} && \
+  /nakama/nakama --config /nakama/data/config/local.yml --database.address ${DATABASE_URL}"]
