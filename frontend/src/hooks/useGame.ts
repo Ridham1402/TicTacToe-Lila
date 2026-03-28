@@ -91,7 +91,6 @@ export function useGame(
     // Socket event listeners
     // -------------------------------------------------------------------------
     // At top of useGame, create a stable handler ref
-    const handleMatchData = useRef<(data: any) => void>();
 
     // Keep it updated with latest state via another ref
     const latestState = useRef({ gameState, matchId, session });
