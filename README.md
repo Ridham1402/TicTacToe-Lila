@@ -283,7 +283,7 @@ Open **two browser tabs** at `http://localhost:5173`:
 5. **Set environment variables** in Render Dashboard → `nakama-tictactoe` → Environment:
    - `DATABASE_URL` — auto-wired from the database (already in render.yaml)
 
-6. **Get your Nakama URL**: `https://nakama-tictactoe.onrender.com`
+6. **Get your Nakama URL**: `https://nakama-tictactoe-y24p.onrender.com`
 
 7. **Test**: visit `https://nakama-tictactoe.onrender.com/healthcheck` — should return `{}`
 
@@ -310,7 +310,7 @@ Open **two browser tabs** at `http://localhost:5173`:
    | `VITE_NAKAMA_PORT` | `443` |
    | `VITE_NAKAMA_USE_SSL` | `true` |
 
-5. Click **Deploy** → your frontend is live at `https://your-project.vercel.app`
+5. Click **Deploy** → your frontend is live at `https://tic-tac-toe-lila.vercel.app`
 
 6. Open two incognito tabs at your Vercel URL and test a full multiplayer game.
 
