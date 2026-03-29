@@ -44,6 +44,7 @@ var fetchMeta = function (nk, uid) {
   } catch (_) { }
   return { wins: 0, losses: 0, streak: 0 };
 };
+
 var recordResult = function (nk, logger, winnerId, loserId, winnerName, loserName, isDraw) {
   if (isDraw) {
     [winnerId, loserId].forEach(function (uid, idx) {
@@ -51,8 +52,10 @@ var recordResult = function (nk, logger, winnerId, loserId, winnerName, loserNam
       var name = idx === 0 ? winnerName : loserName;
       try {
         var m = fetchMeta(nk, uid);
-        nk.leaderboardRecordWrite(LEADERBOARD_ID, uid, name, 0, 0, { wins: m.wins, losses: m.losses, streak: 0 });
-        logger.info("draw recorded for %s", name);
+        nk.leaderboardRecordWrite(LEADERBOARD_ID, uid, name, 0, 0, {
+          wins: m.wins, losses: m.losses + 1, streak: 0
+        });
+        logger.info("draw recorded for %s wins=%d losses=%d", name, m.wins, m.losses + 1);
       } catch (e) { logger.error("draw failed: %s", String(e)); }
     });
     return;
@@ -60,17 +63,19 @@ var recordResult = function (nk, logger, winnerId, loserId, winnerName, loserNam
   if (winnerId) {
     try {
       var mw = fetchMeta(nk, winnerId);
-      logger.info("fetchMeta winner: wins=%d losses=%d streak=%d", mw.wins, mw.losses, mw.streak);
-      nk.leaderboardRecordWrite(LEADERBOARD_ID, winnerId, winnerName, 3, 0, { wins: mw.wins + 1, losses: mw.losses, streak: mw.streak + 1 });
-      logger.info("win recorded for %s", winnerName);
+      nk.leaderboardRecordWrite(LEADERBOARD_ID, winnerId, winnerName, 3, 0, {
+        wins: mw.wins + 1, losses: mw.losses, streak: mw.streak + 1
+      });
+      logger.info("win recorded for %s wins=%d losses=%d streak=%d", winnerName, mw.wins + 1, mw.losses, mw.streak + 1);
     } catch (e) { logger.error("win failed: %s", String(e)); }
   }
   if (loserId) {
     try {
       var ml = fetchMeta(nk, loserId);
-      logger.info("fetchMeta loser: wins=%d losses=%d streak=%d", ml.wins, ml.losses, ml.streak);
-      nk.leaderboardRecordWrite(LEADERBOARD_ID, loserId, loserName, 1, 0, { wins: ml.wins, losses: ml.losses + 1, streak: 0 });
-      logger.info("loss recorded for %s", loserName);
+      nk.leaderboardRecordWrite(LEADERBOARD_ID, loserId, loserName, 1, 0, {
+        wins: ml.wins, losses: ml.losses + 1, streak: 0
+      });
+      logger.info("loss recorded for %s wins=%d losses=%d", loserName, ml.wins, ml.losses + 1);
     } catch (e) { logger.error("loss failed: %s", String(e)); }
   }
 };
