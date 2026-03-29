@@ -285,7 +285,7 @@ Open **two browser tabs** at `http://localhost:5173`:
 
 6. **Get your Nakama URL**: `https://nakama-tictactoe-y24p.onrender.com`
 
-7. **Test**: visit `https://nakama-tictactoe.onrender.com/healthcheck` — should return `{}`
+7. **Test**: visit `https://nakama-tictactoe-y24p.onrender.com/healthcheck` — should return `{}`
 
 > Note: Free Render services **spin down** after 15 minutes of inactivity. The first request after spin-down takes ~30–60s to cold start. For the demo, open the URL manually before testing.
 
@@ -306,7 +306,7 @@ Open **two browser tabs** at `http://localhost:5173`:
 
    | Variable | Value |
    |----------|-------|
-   | `VITE_NAKAMA_HOST` | `nakama-tictactoe.onrender.com` (no `https://`) |
+   | `VITE_NAKAMA_HOST` | `nakama-tictactoe-y24p.onrender.com` (no `https://`) |
    | `VITE_NAKAMA_PORT` | `443` |
    | `VITE_NAKAMA_USE_SSL` | `true` |
 
