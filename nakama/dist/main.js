@@ -147,7 +147,6 @@ var matchLoop = function (ctx, logger, nk, dispatcher, tick, state, messages) {
       var payload;
       try {
         var rawData = msg.data;
-        logger.info("MAKE_MOVE raw type=%s value=%s", typeof rawData, String(rawData));
         payload = JSON.parse(decodeData(rawData));
       } catch (e) {
         logger.warn("MAKE_MOVE malformed: %s", String(e));
@@ -163,17 +162,11 @@ var matchLoop = function (ctx, logger, nk, dispatcher, tick, state, messages) {
         state.winner = win; state.status = "finished";
         var wid = Object.keys(state.players).find(function (u) { return state.players[u].symbol === win; });
         var lid = Object.keys(state.players).find(function (u) { return u !== wid; });
-        logger.info("WIN DETECTED: symbol=%s winnerId=%s loserId=%s winnerName=%s loserName=%s",
-          win, wid, lid,
-          wid && state.players[wid] ? state.players[wid].username : "NONE",
-          lid && state.players[lid] ? state.players[lid].username : "NONE"
-        );
         recordResult(nk, logger, wid, lid,
           wid && state.players[wid] ? state.players[wid].username : "",
           lid && state.players[lid] ? state.players[lid].username : "",
           false
         );
-        logger.info("recordResult called for win");
         dispatcher.broadcastMessage(OpCode.GAME_OVER, JSON.stringify(buildGameOver(state, "normal")), null);
         logger.info("GAME_OVER win: %s", win); continue;
       }
